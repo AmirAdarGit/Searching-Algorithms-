@@ -3,7 +3,7 @@ import java.io.FileReader;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import com.sun.imageio.plugins.common.I18N;
+//import com.sun.imageio.plugins.common.I18N;
 
 import java.*;
 
@@ -18,7 +18,8 @@ public class Run {
  		//Bfs bfs = new Bfs (myBoard);
 		//Dfid dfid = new Dfid(myBoard);
   		//Astar astar = new Astar(myBoard);
-  		IdAstar idastar = new IdAstar(myBoard);
+  		//IdAstar idastar = new IdAstar(myBoard);
+  		Dfbnb dfbnb = new Dfbnb(myBoard);
 	}
 
 }

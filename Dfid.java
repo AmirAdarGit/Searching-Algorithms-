@@ -10,43 +10,56 @@ public class Dfid {
 	Board lastSearch;
 	String goalPath = "";
 	int nodes = 1;
-	public Dfid(Board myBoard) throws InterruptedException{
+	String chooseWithOpen = "";//input value: if it "with open" -> it will print every iteration the open list
+	boolean isPrintOpen;
+	String[] solution;
+	
+	public Dfid(Board myBoard, boolean chooseWithOpen){
 		this.root = myBoard;	
+		this.isPrintOpen = chooseWithOpen;//acording to the user's choose, if print the open linst.
 
 		if(root.checkIfWin()) {
-			System.out.println("the root is the goal!!! ");
-			return;
-			//check if the root is the goal, 
+			System.out.println("Num: " + nodes);
+			System.out.println("Cost: " + root.G_cost_to_choose);
 		}
 		else
-			runDfid(myBoard);
+			this.solution = runDfid(myBoard);
 	}
 
-	public void runDfid(Board myBoard) throws InterruptedException{
+	public String[] runDfid(Board myBoard){
 		long startTime = System.nanoTime();
 		for(int i=1; i<Integer.MAX_VALUE; i++) {
-			System.out.println(i);	
 			Set<String> myCurrentPath = new HashSet<String>();  
 			Board result = lmitedDfs(myBoard, i, myCurrentPath); //action function			
 			if (result.isCutOFF != true){//check if the serch "cut off" on his way to the goal, True by defult
 				if(result.findTheGoal) {
-					System.out.println("win!!!! ");
-					System.out.println("The number od nodes are: "+ nodes);
-					System.out.println("G_cost_to_choose: " + result.G_cost_to_choose);
-					System.out.println(goalPath.substring(0,goalPath.length()-1));
+									
+					String inalPath = result.path.substring(0,result.path.length()-1);
+					String numOfNodes = "Num: " + String.valueOf(nodes);
+					String Cost ="Cost: " + String.valueOf(result.G_cost_to_choose);
 					long endTime = System.nanoTime();
-					System.out.println((endTime-startTime)*Math.pow(10, -9) + " sec");
-					break;
+					String algorithmTime = String.valueOf((endTime-startTime)*Math.pow(10, -9) + " seconds");
+					String[] solution = new String[4];
+					solution[0] = inalPath;
+					solution[1] = numOfNodes;
+					solution[2] = Cost;
+					solution[3] = algorithmTime;					
+					return solution;
+									
 				}
 				else {
-					System.out.println("no path");
-					break;
+					String[] solution = new String[3];
+					solution[0] = "no path";
+					solution[1] = "Num: 1";
+					solution[2] =  String.valueOf((System.nanoTime()-startTime)*Math.pow(10, -9) + " seconds");
+					return solution;
 				}
 			}
 		}
+		return null;
 	}
 
-	public Board lmitedDfs(Board myBoard,int  i, Set<String> myCurrentPath) throws InterruptedException {
+	public Board lmitedDfs(Board myBoard,int  i, Set<String> myCurrentPath){
 		if(myBoard.checkIfWin()) {
 			myBoard.setFindTheGoal(true);
 			this.goalPath = myBoard.path;//when we find the goal i save the path.
@@ -59,16 +72,17 @@ public class Dfid {
 		}
 		else {
  			myCurrentPath.add(myBoard.searchForBoardId());//Add the id board to the hash table
-			myBoard.isCutOFF = false;
+ 			System.out.println(isPrintOpen);
+ 			if(isPrintOpen) printOpenList(myCurrentPath);
+ 			myBoard.isCutOFF = false;
 			ArrayList<Board> childrens =  createChildrens(myBoard,myCurrentPath);//create all the allowd operators fron the node	
 			if(childrens.isEmpty()) {
 				return myBoard;
 			}
-			//Thread s = new Thread();
-			//s.sleep(1000);
+			
 			i--;
 			for (Board b : childrens) {
-				nodes++;
+				this.nodes++;
 				this.lastSearch = lmitedDfs(b, i, myCurrentPath);//recursion call
 				
  				if(lastSearch.isCutOFF) {
@@ -86,6 +100,16 @@ public class Dfid {
 			else
 			return myBoard;
 		}
+	}
+	
+	public String[] getSolution() {
+		return this.solution;
+	}
+	public void printOpenList(Set<String> openList) {
+		for(String s : openList) {
+			System.out.print(s + ", ");
+		}
+		System.out.println();
 	}
 	public ArrayList<Board> createChildrens(Board node, Set<String> myCurrentPath) {
 		//node.printBoard();

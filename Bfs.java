@@ -1,7 +1,9 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
@@ -13,47 +15,77 @@ public class Bfs {
 	Queue<Board> queue = new LinkedList<Board>();
 	Set<String> closedList = new HashSet<String>(); //Represent an hash table thet hold the node that we extend alredy
 	Set<String> openList = new HashSet<String>(); //Represent an hash table thet hold the node that we find but nod extend alredy
-	int i =1;
 	Board root;//Represent the board that we get from the user
+	String chooseWithOpen = "";//input value: if it "with open" -> it will print every iteration the open list
+	boolean isPrintOpen;
+	String[] solution;
 
-	public Bfs(Board myBoard){
+	public Bfs(Board myBoard,boolean chooseWithOpen){
 		this.root = myBoard;	
+		this.isPrintOpen = chooseWithOpen;//acording to the user's choose, if print the open linst.
 
 		if(root.checkIfWin()) {
-			System.out.println("the root is the goal!!! ");
-			//check if the root is the goal, 
+			System.out.println("Num: 1");
+			System.out.println("Cost: " + root.G_cost_to_choose);
 		}
 		else
-			runBfs(myBoard);
+			this.solution = runBfs(myBoard);
 	}
-
-	public void runBfs(Board myBoard){
+	public String[] runBfs(Board myBoard){
+		int numOFNodes = 1;
+		openList.add(myBoard.getId());
 		long startTime = System.nanoTime();
  		queue.add(myBoard);//Add the root to the queue
 		while(!queue.isEmpty()) {//The loop for each level in the algorithm
+ 			if(isPrintOpen) printOpenList(openList);
 			Board node = queue.remove();//Use and remove the first node from the queue	
 			ArrayList<Board> childrens =  createChildrens(node);//create all the allowd operators fron the node	
 			closedList.add(node.searchForBoardId());
 			openList.remove(node.searchForBoardId());
 			for (Board b : childrens) {	
-				//System.out.println(i++);
-				//b.printBoard();
-				if(b.checkIfWin()){
-					System.out.println(b.path.substring(0,b.path.length()-1));
-					System.out.println("The total nobes are: " + (openList.size() + closedList.size()));
-					System.out.println("G_cost_to_choose: " + b.G_cost_to_choose);
+				numOFNodes++;
+				if(b.checkIfWin()){	
+				
+					String inalPath = b.path.substring(0,b.path.length()-1);
+					String numOfNodes = "Num: " + String.valueOf(numOFNodes);
+					String Cost ="Cost: " + String.valueOf(b.G_cost_to_choose);
 					long endTime = System.nanoTime();
-					System.out.println((endTime-startTime)*Math.pow(10, -9) + " sec");		
-					return;
+					String algorithmTime = String.valueOf((endTime-startTime)*Math.pow(10, -9) + " seconds");
+					String[] solution = new String[4];
+					solution[0] = inalPath;
+					solution[1] = numOfNodes;
+					solution[2] = Cost;
+					solution[3] = algorithmTime;					
+					return solution;
 				}
+				openList.add(myBoard.getId());
 				queue.add(b);
-			}
+ 			}
 
 		}
-		System.out.println("No path!");
+		String[] solution = new String[3];
+		solution[0] = "no path";
+		solution[1] = "Num: " +(openList.size() + closedList.size());
+		solution[2] =  String.valueOf((System.nanoTime()-startTime)*Math.pow(10, -9) + " seconds");
+		return solution;
 	}
-
-
+	
+	public void printOpenList(Set<String> openList) {
+		for(String s : openList) {
+			System.out.print(s + ", ");
+		}
+		System.out.println();
+	}
+	
+	public String[] getSolution() {
+		return this.solution;
+	}
+	
+	
+	
+	
+	
+	
 
 	public ArrayList<Board> createChildrens(Board node) {
 		//node.printBoard();

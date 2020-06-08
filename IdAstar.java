@@ -1,53 +1,60 @@
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
 
-//import com.sun.tools.classfile.StackMap_attribute.stack_map_frame;
-
+ 
 
 public class IdAstar {
 	Board root;
 	Set<Board> hashTable = new HashSet<Board>(); // (L)  Represent an hash table that hold the node that we find but nod extend alredy
 	Stack<Board> myStack = new Stack<Board>(); // (H) Represent a stack in order do search in "DFS" approach
 	Stack<String> hashTableID = new Stack<String>(); // for not searching the parent board
-
-	public IdAstar(Board myBoard) throws InterruptedException{
+	String[] solution;
+	String chooseWithOpen = "";//input value: if it "with open" -> it will print every iteration the open list
+	boolean isPrintOpen;
+	
+	public IdAstar(Board myBoard,boolean chooseWithOpen){
+		this.isPrintOpen = chooseWithOpen;//acording to the user's choose, if print the open linst.
 		this.root = myBoard;	
 		if(root.checkIfWin()) {
-			System.out.println("the root is the goal!!! ");
-			return;
-			//check if the root is the goal, 
+			System.out.println("Num: 1");
+			System.out.println("Cost: " + root.G_cost_to_choose);
 		}
 		else
-			IdAstar(myBoard);
+			this.solution = runIdAstar(myBoard);
 	}
 
-	public void IdAstar(Board myBoard) throws InterruptedException{
-		int i = 1;
+	public String[] runIdAstar(Board myBoard){
+		int numberOfNodes = 1;
 		long startTime = System.nanoTime();
 		int limit = myBoard.getHuristicCost(myBoard);
 		myBoard.setHuristics(limit);
+		
 		while(limit < Integer.MAX_VALUE) {
 			int minF = Integer.MAX_VALUE;
 			hashTable.add(myBoard);
 			hashTableID.add(myBoard.getId());
-			myStack.add(myBoard);
+			myStack.add(myBoard);  
 
 			while (!myStack.isEmpty()) {
 				Board current = myStack.pop();
 
 				if(current.getOut() == "out") {
+					current.setOut("");
 					hashTable.remove(current);
 					hashTableID.remove(current.getId());
 				}
 				else {
 					current.setOut("out");
 					myStack.add(current);
+		 			if(isPrintOpen) printOpenList(myStack);
+
 					ArrayList<Board> childrens =  createChildrens(current);//create all the allowd operators fron the node	
 					for(Board b : childrens) {
-						System.out.println(minF);
+						numberOfNodes++;
 						if(b.F_cost_to_choose > limit) {
 							minF = Math.min(b.F_cost_to_choose,minF);
 							continue;
@@ -55,7 +62,7 @@ public class IdAstar {
 						if(hashTable.contains(b.getId()) && (b.getOut() == "out")) {//for loop avoidance
 							continue;
 						}
-						if(hashTable.contains(b.getId()) && (b.getOut() != "out")) {
+						if(hashTable.contains(b.getId()) && (b.getOut() != "out")) {//Check if the node that in the hash table have better f(n) (less)
 							Board temp = findBoard(b);
 
 							if(temp.F_cost_to_choose > b.F_cost_to_choose) {//we find a better path to an acsist board.
@@ -70,15 +77,19 @@ public class IdAstar {
 								continue;//continue to the next operator
 							}
 						}
-						if(b.checkIfWin()) {
-							System.out.println(b.path.substring(0,b.path.length()-1));
-							//System.out.println("The total nobes are: " + (i));
-							System.out.println("The total nobes are: " + (myStack.size()));
-
-							System.out.println("Cost: " + b.G_cost_to_choose);
-							long endTime = System.nanoTime();
-							System.out.println((endTime-startTime)*Math.pow(10, -9) + " sec");		
-							return;
+						if(b.checkIfWin()) {							  							
+ 							String inalPath = b.path.substring(0,b.path.length()-1);
+ 							String numOfNodes = "Num: " + String.valueOf(numberOfNodes);
+ 							String Cost ="Cost: " + String.valueOf(b.G_cost_to_choose);
+ 							long endTime = System.nanoTime();
+ 							String algorithmTime = String.valueOf((endTime-startTime)*Math.pow(10, -9) + " seconds");
+ 							String[] solution = new String[4];
+ 							solution[0] = inalPath;
+ 							solution[1] = numOfNodes;
+ 							solution[2] = Cost;
+ 							solution[3] = algorithmTime;
+ 						 							
+							return solution;
 						}
 						else {
 							myStack.add(b);
@@ -87,14 +98,17 @@ public class IdAstar {
 						}
 
 					}
-					myBoard.setOut("");
-					limit = minF;
-				}
-			}
 
+				}
+
+			}
+			limit = minF;
 		}
-		System.out.println("no path");
-		return;
+ 		String[] solution = new String[3];
+		solution[0] = "no path";
+		solution[1] = "Num: 1";
+		solution[2] =  String.valueOf((System.nanoTime()-startTime)*Math.pow(10, -9) + " seconds");
+		return solution;
 	}
 
 
@@ -109,9 +123,17 @@ public class IdAstar {
 	}
 
 
+	public String[] getSolution() {
+		return this.solution;
+	}
 
-
-
+	public void printOpenList(Stack<Board> queue) {
+		for(Board b : queue) {
+			System.out.print(b.boardId + ", ");
+		}
+		System.out.println();
+	}
+	
 	public ArrayList<Board> createChildrens(Board node) {
 		ArrayList<Board> childrens = new ArrayList<Board>( );
 		if(node.y_whiteT < node.mystate[0].length-1 && node.mystate[node.x_whiteT][node.y_whiteT+1].color != 'B') {
