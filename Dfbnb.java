@@ -11,13 +11,17 @@ public class Dfbnb {
 	Set<Board> hashTable = new HashSet<Board>(); // (L)  Represent an hash table that hold the node that we find but nod extend alredy
 	Stack<Board> myStack = new Stack<Board>(); // (H) Represent a stack in order do search in "DFS" approach
 	Stack<String> hashTableID = new Stack<String>(); // for not searching the parent board
+	Set<String> numbersOfCreatedNodes = new HashSet<String>();//in order to count the number of the created nodes.
+	Set<String> openListOfNodes = new HashSet<String>();//in order to count the number of the created nodes.
+
 	Board winBoard;
 	String[] solution;
 	String chooseWithOpen = "";//input value: if it "with open" -> it will print every iteration the open list
 	boolean isPrintOpen;
 
 	public Dfbnb(Board myBoard,boolean chooseWithOpen){
-		this.root = myBoard;	
+		this.root = myBoard;
+		this.isPrintOpen = chooseWithOpen;
 		if(root.checkIfWin()) {
 			System.out.println("Num: 1");
 			System.out.println("Cost: " + root.G_cost_to_choose);
@@ -34,12 +38,15 @@ public class Dfbnb {
 		String pathResult = "";
 		int limit = myBoard.getHuristicCost(myBoard);
 		myBoard.setHuristics(limit);
+		myBoard.setFcost(limit);
 		hashTable.add(myBoard);//For loop avoidance (hold the board as is)
 		hashTableID.add(myBoard.getId());//For loop avoidance (hold the id of the board)
 		myStack.add(myBoard);//For Dfs search.
+		numbersOfCreatedNodes.add(myBoard.getId());
+		openListOfNodes.add(myBoard.getId());
 		
 		
-		
+		if(isPrintOpen) printOpenList(openListOfNodes);
 		while(!myStack.isEmpty()){
 			Board current = myStack.pop();
 			if(current.getOut()=="out") {//If the node is not part of the path that i work on we take it out and clear the "out" var
@@ -48,24 +55,25 @@ public class Dfbnb {
 				hashTableID.remove(current.getId());
 			}
 			else {
+				openListOfNodes.remove(current.getId());
 				current.setOut("out");
 				myStack.add(current);
 				ArrayList<Board> childrens =  createChildrens(current);//create all the allowd operators fron the node	
 				PriorityQueue<Board> pQueue = new PriorityQueue<Board>(); //The queue is for node ordaring.
 				for(Board b : childrens) {
 					pQueue.add(b);
+					numbersOfCreatedNodes.add(b.getId());
+					openListOfNodes.add(b.getId());
 				}
-				numberOfNodes +=  pQueue.size();
+				if(isPrintOpen) printOpenList(openListOfNodes);
 				
 				for(Board b : pQueue) {//sorted childrens by F(b)
 					if(b.F_cost_to_choose >= threshold) {//if the current son have F > then the thresholl remove the node and all other nodes
 						pQueue.remove(b);
-						for(Board delit : pQueue) {
-							pQueue.remove(delit);
-						}
+						pQueue.clear();
 						continue;
 					}
-					else if(hashTable.contains(b) && b.getOut()=="out") {
+					else if(hashTable.contains(b) && b.getOut()=="out") {//for loop avoidance proper, if we find a node that on branch, avoid it.  
 						pQueue.remove(b);
 						continue;
 					}
@@ -84,7 +92,7 @@ public class Dfbnb {
 							continue;
 						}
 					}
-					else if(b.checkIfWin()) {
+					else if(b.checkIfWin()) {//f(g) < t
 						//System.out.println(b.path);//printing the path for each solution
 						threshold = b.F_cost_to_choose;
 						winBoard = b;
@@ -95,6 +103,7 @@ public class Dfbnb {
 						}
 						continue;
 					}
+
 				}
 				Stack<Board> forReversTheElement = new Stack<Board>();
 				while(!pQueue.isEmpty()) {
@@ -109,7 +118,7 @@ public class Dfbnb {
 		}
 
 		String inalPath = winBoard.path.substring(0,winBoard.path.length()-1);
-		String numOfNodes = "Num: " + String.valueOf(numberOfNodes);
+		String numOfNodes = "Num: " + String.valueOf(numbersOfCreatedNodes.size());
 		String Cost ="Cost: " + String.valueOf(winBoard.G_cost_to_choose);
 		long endTime = System.nanoTime();
 		String algorithmTime = String.valueOf((endTime-startTime)*Math.pow(10, -9) + " seconds");
@@ -137,9 +146,9 @@ public class Dfbnb {
 		return this.solution;
 	}
 
-	public void printOpenList(Stack<Board> queue) {
-		for(Board b : queue) {
-			System.out.print(b.boardId + ", ");
+	public void printOpenList(Set<String> nodes) {
+		for(String b : nodes) {
+			System.out.print(b + ", ");
 		}
 		System.out.println();
 	}

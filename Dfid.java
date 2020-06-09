@@ -72,7 +72,7 @@ public class Dfid {
 		}
 		else {
  			myCurrentPath.add(myBoard.searchForBoardId());//Add the id board to the hash table
- 			System.out.println(isPrintOpen);
+ 			//System.out.println(isPrintOpen);
  			if(isPrintOpen) printOpenList(myCurrentPath);
  			myBoard.isCutOFF = false;
 			ArrayList<Board> childrens =  createChildrens(myBoard,myCurrentPath);//create all the allowd operators fron the node	

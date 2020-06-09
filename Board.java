@@ -67,7 +67,7 @@ public class Board implements Comparable<Board>
 	}
 
 
-	public Board(init_file init) {
+	public Board(Ex1 init) {
 		//for Dfid
 		this.isCutOFF = false;
 		this.findTheGoal = false;
@@ -120,7 +120,9 @@ public class Board implements Comparable<Board>
 	public void setHuristics(int H) {
 		this.H_cost_to_choose = H;
 	}
-	
+	public void setFcost(int F) {
+		this.F_cost_to_choose = F;
+	}
 	public String getOut() {
 		return this.out;
 	}

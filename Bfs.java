@@ -34,18 +34,19 @@ public class Bfs {
 	public String[] runBfs(Board myBoard){
 		int numOFNodes = 1;
 		openList.add(myBoard.getId());
+		if(isPrintOpen) printOpenList(openList);
 		long startTime = System.nanoTime();
- 		queue.add(myBoard);//Add the root to the queue
+		queue.add(myBoard);//Add the root to the queue
 		while(!queue.isEmpty()) {//The loop for each level in the algorithm
- 			if(isPrintOpen) printOpenList(openList);
 			Board node = queue.remove();//Use and remove the first node from the queue	
 			ArrayList<Board> childrens =  createChildrens(node);//create all the allowd operators fron the node	
 			closedList.add(node.searchForBoardId());
 			openList.remove(node.searchForBoardId());
+			if(isPrintOpen) printOpenList(openList);
 			for (Board b : childrens) {	
 				numOFNodes++;
 				if(b.checkIfWin()){	
-				
+
 					String inalPath = b.path.substring(0,b.path.length()-1);
 					String numOfNodes = "Num: " + String.valueOf(numOFNodes);
 					String Cost ="Cost: " + String.valueOf(b.G_cost_to_choose);
@@ -60,7 +61,7 @@ public class Bfs {
 				}
 				openList.add(myBoard.getId());
 				queue.add(b);
- 			}
+			}
 
 		}
 		String[] solution = new String[3];
@@ -69,23 +70,23 @@ public class Bfs {
 		solution[2] =  String.valueOf((System.nanoTime()-startTime)*Math.pow(10, -9) + " seconds");
 		return solution;
 	}
-	
+
 	public void printOpenList(Set<String> openList) {
 		for(String s : openList) {
 			System.out.print(s + ", ");
 		}
 		System.out.println();
 	}
-	
+
 	public String[] getSolution() {
 		return this.solution;
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 
 	public ArrayList<Board> createChildrens(Board node) {
 		//node.printBoard();
