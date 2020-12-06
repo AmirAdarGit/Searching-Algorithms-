@@ -6,7 +6,6 @@ You are required to enter the input1.txt file where you can understand how to se
 
 example:
 
-input.txt
 -----------------------
 IDA*              
 with time             
@@ -14,10 +13,11 @@ no open
 4x4                 
 Black:       
 Red:           
-1,6,4,10
-3,2,14,_
-9,7,11,5
-8,12,13,15
+1,6,4,10__
+3,2,14,___
+9,7,11,5__
+8,12,13,15__
+
 -----------------------
 
 IDA*           -----> Here you tipe the name of the requier algorithm - Bfs, Dfid, A*, IDA*, DfbNb.
