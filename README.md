@@ -1,13 +1,13 @@
 # Searching-Algorithms-
-Implementation of "Tail Puzzle" game using 5 searching algorithms (Bfs, Dfid, A*, IdA*, DfbNb).
+Implementation of "Tail Puzzle" game using 5 searching algorithms (Bfs, Dfid, A*, IdA*, DfbNb).<br />
 
 -----------------------
-for each one of the Algorithms:
-the solution is look for the optimum one <==> if there is a solution 
+for each one of the Algorithms:<br />
+the solution is look for the optimum one <==> if there is a solution <br />
 
 -----------------------
 
-In order to run the code you must download all the files to your computer.
+In order to run the code you must download all the files to your computer.<br />
 You are required to enter the input1.txt file where you can understand how to set up the gaming board in order to run one of the algorithms and see if there is a solution for the input tile puzzle board.
 
 example:
