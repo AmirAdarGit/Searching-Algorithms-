@@ -38,10 +38,10 @@ Red:           -----> (Not necessary) Here you can set the red cells when moving
     
     -----> Example of input board.
           
-1,6,4,10
-3,2,14,_
-9,7,11,5
-8,12,13,15
+1,6,4,10 <br />
+3,2,14,_ <br />
+9,7,11,5 <br />
+8,12,13,15 <br />
 
 
 example: 
@@ -52,13 +52,28 @@ example:
 
 ![](pictures/solve.png)
 
-Best web for getting a shuffle board:
-https://appzaza.com/tile-slide-game
+The output to -> output.txt
 
-10D-4R-6R-2U-3R-9U-8U-12L-13L-11D-7R-8R-12U-13L-11L-7D-8R-12R-9D-1D-2L-3U-14L-10L-5U-8R-12R-14D-10L-5L-8U-12R-7U-11R-14D-10D-5L-6D-3R-2R-1U-5L-6L-7U-11U-15L
-Num: 2492525
-Cost: 46
-325.1204642 seconds
+10D-4R-6R-2U-3R-9U-8U-12L-13L-11D-7R-8R-12U-13L-11L-7D-8R-12R-9D-1D-2L-3U-14L-10L-5U-8R-12R-14D-10L-5L-8U-12R-7U-11R-14D-10D-5L-6D-3R-2R-1U-5L-6L-7U-11U-15L <br />
+Num: 2492525 <br />
+Cost: 46 <br />
+325.1204642 seconds <br />
+
+
+so now we can cheack the resulte from the algorithm.<br />
+10D - take the 10's number cell one step doun.<br />
+4R - take the 4's number cell one step right.<br />
+6R<br />
+2U<br />
+3R<br />
+...<br />
+
+
+
+Best web for getting a shuffle board:<br />
+https://appzaza.com/tile-slide-game<br />
+
+
 
 
 
