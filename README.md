@@ -25,9 +25,12 @@ with open-----------> If it is registered in the input file is "no open" all the
                       If "with open" is written, the algorithm will run on the console, in each row you will see the "open list" of the search graph, until the solution is                           found. 
                       
 3x4-----------------> In this row you enter the size of the board (NxM)
+
 Black: 3,4,5--------> Here you can set the black cells, the ones that will not be able to move during the game.
+
 Red: 1,2------------> Here you can set the red cells when moving this cell the "cost" of moving will be 30 points.
                       For all the cells that not selected as red or black, will set to the green collor automatically, And for each move of green cell will coast 10 points. 
+                      
 1,2,3,4             
 5,6,11,7 -----------> Example of input board
 9,10,8,_
