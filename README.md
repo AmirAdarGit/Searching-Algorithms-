@@ -1,6 +1,12 @@
 # Searching-Algorithms-
 Implementation of "Tail Puzzle" game using 5 searching algorithms (Bfs, Dfid, A*, IdA*, DfbNb).
 
+-----------------------
+for each one of the Algorithms:
+the solution is look for the optimum one <==> if there is a solution 
+
+-----------------------
+
 In order to run the code you must download all the files to your computer.
 You are required to enter the input1.txt file where you can understand how to set up the gaming board in order to run one of the algorithms and see if there is a solution for the input tile puzzle board.
 
@@ -32,9 +38,8 @@ no open        -----> If it is registered in the input file is "no open" all the
 Black:         -----> (Not necessary) Here you can set the black cells, the ones that will not be able to move during the game.
 
 Red:           -----> (Not necessary) Here you can set the red cells when moving this cell the "cost" of moving will be 30 points.
-                      For all the cells that not selected as red or black, will set to the green collor automatically, And for each move of green cell will coast 10 points. 
-             
-    
+                      For all the cells that not selected as red or black, will set to the green collor automatically, And for each move of green cell will co
+                      
     
     -----> Example of input board.
           
@@ -52,10 +57,19 @@ example:
 
 The output to -> output.txt
 
+-----------------------
 10D-4R-6R-2U-3R-9U-8U-12L-13L-11D-7R-8R-12U-13L-11L-7D-8R-12R-9D-1D-2L-3U-14L-10L-5U-8R-12R-14D-10L-5L-8U-12R-7U-11R-14D-10D-5L-6D-3R-2R-1U-5L-6L-7U-11U-15L <br />
-Num: 2492525 <br />
+Num: 2492525 <br /> 
 Cost: 46 <br />
 325.1204642 seconds <br />
+
+-----------------------
+
+explain the resoults:
+
+10D-4R-6R-2U-3R-9U-8U ... represent the path to solve the board <br />
+Num: 2492525              represent the nunber of node that create in the graph search <br /> 
+Cost: 46                  represebt the cost for the cell moves (10 points for green, 30 points for red) <br />
 
 
 so now we can cheack the resulte from the algorithm.<br />
@@ -68,7 +82,7 @@ so now we can cheack the resulte from the algorithm.<br />
 
 
 
-Best web for getting a shuffle board:<br />
+Best web for getting a shuffle board and cheak the correct results:<br />
 https://appzaza.com/tile-slide-game<br />
 
 
