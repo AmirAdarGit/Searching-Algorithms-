@@ -32,8 +32,13 @@ Red: 1,2------------> Here you can set the red cells when moving this cell the "
 5,6,11,7 -----------> Example of input board
 9,10,8,_
 
-represent the board :
+
+![](pictures/not-solve.jpg.png)
+
+->
+
 ![](pictures/solve.png)
+
 
 
 
