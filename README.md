@@ -1,9 +1,9 @@
 # Searching-Algorithms-
-Implementation of "Tail Puzzle" game using 5 searching algorithms (Bfs, Dfid, A*, IdA*, DfbNb).<br />
+Implementation of "Tail Puzzle" game using 5 searching algorithms (BFS, DFID, A*, IDA*, DFBnB).<br />
 
 -----------------------
-for each one of the Algorithms:<br />
-the solution is look for the optimum one <==> if there is a solution <br />
+For each one of the Algorithms:<br />
+The solution is look for the optimum one <==> If there is any solution <br />
 
 -----------------------
 
