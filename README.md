@@ -6,8 +6,19 @@ You are required to enter the input1.txt file where you can understand how to se
 
 example:
 
-DFBnB               //Here you tipe the name of the requier algorithm - Bfs, Dfid, A*, IdA*, DfbNb
-no time             //If you want to see the runtime of the algorithm until it finds the solution write down "with time" otherwise leave "no time".
+DFBnB              
+no time             
+with open           
+3x4                 
+Black: 3,4,5       
+Red: 1,2            
+1,2,3,4                         
+5,6,11,7           
+9,10,8,_
+
+
+DFBnB---------------> Here you tipe the name of the requier algorithm - Bfs, Dfid, A*, IdA*, DfbNb
+no time-------------> If you want to see the runtime of the algorithm until it finds the solution write down "with time" otherwise leave "no time".
 with open           //If it is registered in the input file is "no open" all the output will be written to the output.txt file and nothing will be printed in the console.
                       If "with open" is written, the algorithm will run on the console, in each row you will see the "open list" of the search graph, until the solution is found. 
 3x4                 //In this row you enter the size of the board (NxM)
@@ -17,8 +28,6 @@ Red: 1,2            //Here you can set the red cells when moving this cell the "
 1,2,3,4             
 5,6,11,7            //Example of input board
 9,10,8,_
-
-
 
 
 
