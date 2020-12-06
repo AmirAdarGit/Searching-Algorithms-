@@ -33,7 +33,7 @@ Red: 1,2------------> Here you can set the red cells when moving this cell the "
 9,10,8,_
 
 represent the board :
-[!]
+![](pictures/solve.png)
 
 
 
