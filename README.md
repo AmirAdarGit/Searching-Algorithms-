@@ -46,11 +46,11 @@ Red:           -----> (Not necessary) Here you can set the red cells when moving
 
 example: 
 
-![](pictures/not-solve.jpg)
+![](pictures/4X4.jpg)
 
 ->
 
-![](pictures/solve.png)
+![](pictures/finish.png)
 
 The output to -> output.txt
 
